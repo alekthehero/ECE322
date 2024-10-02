@@ -33,6 +33,7 @@ Makefile
 *.iml
 *.iws
 cmake-build-*/
+cmake-build-debug/
 
 # Other IDE specific files
 .vscode/
