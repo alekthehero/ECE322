@@ -16,13 +16,23 @@ void handle_redirection(char **args, int *in_fd, int *out_fd);
 
 void handle_pipe(char **args1, char **args2);
 
+void set_text_color(const char *color) {
+    printf("%s", color);
+}
+
+void reset_text_color() {
+    printf("\033[0m");
+}
+
 int main() {
     if (DEBUG) {
         setvbuf(stdout, NULL, _IONBF, 0);
     }
     char input[MAX_CMD_LEN];
     while (1) {
+        set_text_color("\033[1;32m");
         printf("GitBasher> ");
+        reset_text_color();
         if (fgets(input, sizeof(input), stdin) == NULL) {
             break;
         }
