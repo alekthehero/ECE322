@@ -32,7 +32,7 @@ int aliasCount = 0;
 
 void run_command(char *cmd);
 
-void handle_redirection(char **args, int *in_fd, int *out_fd);
+void handle_redirection(char **args, const int *in_fd, const int *out_fd);
 
 void handle_pipe(char **args1, char **args2);
 
@@ -75,6 +75,10 @@ void set_variable(char *name, char *value) {
         }
     }
     variables[varCount].name = strdup(name);
+    if (value[0] == '\"' && value[strlen(value) - 1] == '\"') {
+        value[strlen(value) - 1] = '\0';
+        value++;
+    }
     variables[varCount].value = strdup(value);
     varCount++;
 }
@@ -201,7 +205,7 @@ void handle_glob_patterns(char **args) {
     args[new_arg_count] = NULL;
 }
 
-void handle_redirection(char **args, int *in_fd, int *out_fd) {
+void handle_redirection(char **args, const int *in_fd, const int *out_fd) {
     pid_t pid = fork();
     if (pid == 0) {
         if (*in_fd != -1) {
@@ -274,13 +278,6 @@ void run_command(char *cmd) {
                 args[arg_count++] = start;
             }
             start = cmd + 1;
-        } else if (!in_quotes && *cmd == '|') {
-            if (start != cmd) {
-                *cmd = '\0';
-                args[arg_count++] = start;
-            }
-            pipe_index = arg_count - 1;
-            start = cmd + 1;
         }
         cmd++;
     }
@@ -288,9 +285,6 @@ void run_command(char *cmd) {
         args[arg_count++] = start;
     }
     args[arg_count] = NULL;
-
-    expand_aliases(args);
-    handle_glob_patterns(args);
 
     if (strcmp(args[0], "set") == 0) {
         if (args[1] == NULL) {
@@ -319,6 +313,9 @@ void run_command(char *cmd) {
         }
         return;
     }
+
+    expand_aliases(args);
+    handle_glob_patterns(args);
 
     for (int i = 0; args[i] != NULL; i++) {
         if (strcmp(args[i], "|") == 0) {
