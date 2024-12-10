@@ -151,6 +151,7 @@ void handleUserInput(int server_fd) {
                 printf("\n");
 
                 strncpy(packet.message, password, MAX_MESSAGE_SIZE);
+                tcsetattr(STDIN_FILENO, TCSANOW, &old_term);
             } else {
                 printf("\033[0;31m*> Invalid Command\033[0m\n");
                 return;
