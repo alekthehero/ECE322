@@ -1,6 +1,8 @@
 #ifndef LAB4_DEFINITIONS_H
 #define LAB4_DEFINITIONS_H
 
+#include <sys/socket.h>
+
 #define PORT 12345
 #define MAX_INPUT_SIZE 1024
 #define MAX_MESSAGE_SIZE 1024
