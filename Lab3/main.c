@@ -133,8 +133,9 @@ void list_aliases() {
     }
 }
 
+char buf[MAX_CMD_LEN];
+
 void expand_variables(char *cmd) {
-    char buf[MAX_CMD_LEN];
     char *src = cmd, *dst = buf;
     while (*src) {
         if (*src == '$') {
@@ -314,7 +315,7 @@ void run_command(char *cmd) {
         return;
     }
 
-    expand_aliases(args);
+    expand_aliases(&cmd);
     handle_glob_patterns(args);
 
     for (int i = 0; args[i] != NULL; i++) {
