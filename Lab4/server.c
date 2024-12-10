@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <arpa/inet.h>
 #include <poll.h>
 #include <string.h>
 #include <signal.h>
+#include <netinet/in.h>
 
 typedef struct {
     char username[MAX_USERNAME_SIZE];
