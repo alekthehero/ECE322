@@ -2,6 +2,7 @@
 #define LAB4_DEFINITIONS_H
 
 #include <sys/socket.h>
+#include <netinet/in.h>
 
 #define PORT 12345
 #define MAX_INPUT_SIZE 1024
