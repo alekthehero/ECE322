@@ -119,6 +119,7 @@ void handleUserInput(int server_fd) {
             if (token != NULL) {
                 strncpy(packet.username, token, MAX_USERNAME_SIZE);
                 printf("Enter password: ");
+                fflush(stdout);
                 char password[MAX_MESSAGE_SIZE];
                 struct termios old_term, new_term;
                 tcgetattr(STDIN_FILENO, &old_term);

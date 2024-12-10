@@ -5,7 +5,6 @@
 #include "client.h"
 
 int main(int argc, char *argv[]) {
-    setvbuf(stdout, NULL, _IONBF, 0);
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <server|client>\n", argv[0]);
         exit(EXIT_FAILURE);
